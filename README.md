@@ -4,7 +4,7 @@ An authentication system with REST API to add users dynamically to the XTurn ser
 
 ## Installation
 
-# mix.exs
+### mix.exs
 
 Add this plugin to the XTurn mix file.
 
@@ -12,7 +12,7 @@ Add this plugin to the XTurn mix file.
 {:xturn_simple_auth, git: "https://github.com/xirsys/xturn-simple-auth"}
 ```
 
-# config/config.exs
+### config/config.exs
 
 Add the following to XTurn `config.exs` file.
 
