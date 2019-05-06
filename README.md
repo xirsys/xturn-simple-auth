@@ -8,15 +8,22 @@ An authentication system with REST API to add users dynamically to the XTurn ser
 
 Add this plugin to the XTurn mix file.
 
-```
+```elixir
 {:xturn_simple_auth, git: "https://github.com/xirsys/xturn-simple-auth"}
+```
+Then, add the dep as an additional application in the apps list.
+
+```elixir
+  def application() do
+    [
+      applications: [:crypto, :sasl, :logger, :ssl, :xmerl, :exts, :xturn_simple_auth],
 ```
 
 ### config/config.exs
 
 Add the following to XTurn `config.exs` file.
 
-```
+```elixir
 config :xturn, Xirsys.XTurn.SimpleAuth.Server,
   adapter: Plug.Cowboy,
   plug: Xirsys.XTurn.SimpleAuth.API,
@@ -33,7 +40,7 @@ Next, under the `pipes` section, replace all occurrances of `Xirsys.XTurn.Action
 
 When running XTurn, you can add users by posting to the `/auth` endpoint on port 8880.  The plugin will generate a username and password for you.
 
-```
+```json
 {
     "status": "ok",
     "password": "05883c85065d19a9ee5742b91fcc80ba",
