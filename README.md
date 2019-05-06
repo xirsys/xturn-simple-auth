@@ -1,21 +1,42 @@
-# XturnSimpleAuth
+# XTurn Simple Auth
 
-**TODO: Add description**
+An authentication system with REST API to add users dynamically to the XTurn server
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `xturn_simple_auth` to your list of dependencies in `mix.exs`:
+# mix.exs
 
-```elixir
-def deps do
-  [
-    {:xturn_simple_auth, "~> 0.1.0"}
-  ]
-end
+Add this plugin to the XTurn mix file.
+
+```
+{:xturn_simple_auth, git: "https://github.com/xirsys/xturn-simple-auth"}
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/xturn_simple_auth](https://hexdocs.pm/xturn_simple_auth).
+# config/config.exs
 
+Add the following to XTurn `config.exs` file.
+
+```
+config :xturn, Xirsys.XTurn.SimpleAuth.Server,
+  adapter: Plug.Cowboy,
+  plug: Xirsys.XTurn.SimpleAuth.API,
+  scheme: :http,
+  port: 8880
+
+config :xturn,
+  maru_servers: [Xirsys.XTurn.SimpleAuth.Server]
+```
+
+## Usage
+
+When running XTurn, you can add users by posting to the `/auth` endpoint on port 8880.  The plugin will generate a username and password for you.
+
+```
+{
+    "status": "ok",
+    "password": "05883c85065d19a9ee5742b91fcc80ba",
+    "username": "05883c85065cad4663bbec8be1a99b37"
+}
+```
+
+Alternatively, pass in `username` and `password` values to supply your own.

@@ -22,11 +22,27 @@
 ###
 ### ----------------------------------------------------------------------
 
-defmodule Xirsys.XTurn.SimpleAuth.Application do
-  use Application
+defmodule Xirsys.XTurn.SimpleAuth.API do
+  use Xirsys.XTurn.SimpleAuth.Server
 
-  def start(_type, _args) do
-    opts = [strategy: :one_for_one, name: Xirsys.XTurn.SimpleAuth.Supervisor]
-    Supervisor.start_link(children, opts)
+  plug Plug.Parsers,
+    pass: ["*/*"],
+    json_decoder: Jason,
+    parsers: [:urlencoded, :json, :multipart]
+
+  mount(Xirsys.XTurn.SimpleAuth.API.Router.Auth)
+
+  rescue_from [MatchError, RuntimeError], with: :custom_error
+
+  rescue_from :all, as: e do
+    conn
+    |> put_status(Plug.Exception.status(e))
+    |> text("Server Error: #{inspect e}")
+  end
+
+  defp custom_error(conn, exception) do
+    conn
+    |> put_status(500)
+    |> text(exception.message)
   end
 end

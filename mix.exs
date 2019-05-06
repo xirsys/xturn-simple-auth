@@ -28,8 +28,8 @@ defmodule Xirsys.XTurn.SimpleAuth.MixProject do
     [
       {:xmedialib, git: "https://github.com/xirsys/xmedialib"},
       {:maru, "~> 0.13"},
-      {:jason, "~> 1.0"},
-      {:cowboy, "~> 2.3"}
+      {:jason, "~> 1.1"},
+      {:plug_cowboy, "~> 2.0"}
     ]
   end
 
