@@ -27,6 +27,8 @@ config :xturn,
   maru_servers: [Xirsys.XTurn.SimpleAuth.Server]
 ```
 
+Next, under the `pipes` section, replace all occurrances of `Xirsys.XTurn.Actions.Authenticates` with `Xirsys.XTurn.SimpleAuth.Actions.Authenticates`.
+
 ## Usage
 
 When running XTurn, you can add users by posting to the `/auth` endpoint on port 8880.  The plugin will generate a username and password for you.
