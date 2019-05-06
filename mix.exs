@@ -21,11 +21,16 @@ defmodule Xirsys.XTurn.SimpleAuth.MixProject do
   end
 
   def application do
-    [mod: {Xirsys.XTurn.SimpleAuth, []}, applications: []]
+    [mod: {Xirsys.XTurn.SimpleAuth, []}, applications: [:maru]]
   end
 
   defp deps do
-    []
+    [
+      {:xmedialib, git: "https://github.com/xirsys/xmedialib"},
+      {:maru, "~> 0.13"},
+      {:jason, "~> 1.0"},
+      {:cowboy, "~> 2.3"}
+    ]
   end
 
   defp package do

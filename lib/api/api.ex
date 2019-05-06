@@ -25,15 +25,6 @@
 defmodule Xirsys.XTurn.SimpleAuth.API do
   use Maru.Router
 
-  before do
-    plug(
-      Plug.Parsers,
-      pass: ["*/*"],
-      json_decoder: Poison,
-      parsers: [:urlencoded, :json, :multipart]
-    )
-  end
-
   mount(Xirsys.XTurn.SimpleAuth.API.Router.Auth)
   mount(Xirsys.XTurn.SimpleAuth.API.Router.Allocation)
 
