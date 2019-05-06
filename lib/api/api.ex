@@ -23,14 +23,26 @@
 ### ----------------------------------------------------------------------
 
 defmodule Xirsys.XTurn.SimpleAuth.API do
-  use Maru.Router
+  use Xirsys.XTurn.SimpleAuth.Server
+
+  plug Plug.Parsers,
+    pass: ["*/*"],
+    json_decoder: Jason,
+    parsers: [:urlencoded, :json, :multipart]
 
   mount(Xirsys.XTurn.SimpleAuth.API.Router.Auth)
-  mount(Xirsys.XTurn.SimpleAuth.API.Router.Allocation)
+
+  rescue_from [MatchError, RuntimeError], with: :custom_error
 
   rescue_from :all, as: e do
     conn
+    |> put_status(Plug.Exception.status(e))
+    |> text("Server Error: #{inspect e}")
+  end
+
+  defp custom_error(conn, exception) do
+    conn
     |> put_status(500)
-    |> text("Server Error")
+    |> text(exception.message)
   end
 end

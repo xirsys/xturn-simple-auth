@@ -23,16 +23,16 @@
 ### ----------------------------------------------------------------------
 
 defmodule Xirsys.XTurn.SimpleAuth.Supervisor do
-  use Supervisor
+  use Application
   require Logger
 
-  def start_link do
-    Supervisor.start_link(__MODULE__, :ok)
-  end
-
-  def init(:ok) do
+  def start(_type, _args) do
     Logger.info("starting auth client")
-    children = [worker(Xirsys.XTurn.SimpleAuth.Client, [])]
-    supervise(children, strategy: :one_for_one)
+    children = [
+      worker(Xirsys.XTurn.SimpleAuth.Server, [])
+      worker(Xirsys.XTurn.SimpleAuth.Client, [])
+    ]
+    opts = [strategy: :one_for_one, name: Xirsys.XTurn.SimpleAuth]
+    Supervisor.start_link(children, opts)
   end
 end

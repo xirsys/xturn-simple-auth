@@ -21,7 +21,7 @@ defmodule Xirsys.XTurn.SimpleAuth.MixProject do
   end
 
   def application do
-    [mod: {Xirsys.XTurn.SimpleAuth, []}, applications: [:maru]]
+    [mod: {Xirsys.XTurn.SimpleAuth.Supervisor, []}, applications: [:maru]]
   end
 
   defp deps do

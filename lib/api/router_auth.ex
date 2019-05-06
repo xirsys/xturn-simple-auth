@@ -23,7 +23,7 @@
 ### ----------------------------------------------------------------------
 
 defmodule Xirsys.XTurn.SimpleAuth.API.Router.Auth do
-  use Maru.Router
+  use Xirsys.XTurn.SimpleAuth.Server
 
   namespace :auth do
     desc("Adds a user to the user list")
@@ -38,21 +38,21 @@ defmodule Xirsys.XTurn.SimpleAuth.API.Router.Auth do
     end
 
     post do
-      if not params[:username] or not params[:password] do
+      if not Map.has_key?(params, :username) or not Map.has_key?(params, :password) do
         {:ok, u, p} =
           Xirsys.XTurn.SimpleAuth.Client.create_user(
-            params[:namespace] || "",
-            params[:peer_id] || ""
+            Map.get(params, :namespace) || "",
+            Map.get(params, :peer_id) || ""
           )
 
         json(conn, %{status: :ok, username: u, password: p})
       else
         {:ok, u, p} =
           Xirsys.XTurn.SimpleAuth.Client.add_user(
-            params[:username],
-            params[:password],
-            params[:namespace] || "",
-            params[:peer_id] || ""
+            Map.get(params, :username),
+            Map.get(params, :password),
+            Map.get(params, :namespace) || "",
+            Map.get(params, :peer_id) || ""
           )
 
         json(conn, %{status: :ok, username: u, password: p})

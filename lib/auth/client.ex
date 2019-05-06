@@ -35,7 +35,7 @@ defmodule Xirsys.XTurn.SimpleAuth.Client do
   # Interface functions
   #########################################################################################################################
 
-  def start_link(),
+  def start_link([]),
     do: GenServer.start_link(__MODULE__, [], name: __MODULE__)
 
   def create_user(ns),
