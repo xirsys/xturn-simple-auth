@@ -11,10 +11,10 @@ defmodule Xirsys.XTurn.SimpleAuth.MixProject do
       deps: deps(),
       description: "Simple authentication module for the XTurn server.",
       source_url: "https://github.com/xirsys/xturn-simple-auth",
-      homepage_url: "https://xirsys.github.io/xturn/",
+      homepage_url: "https://xturn.me",
       package: package(),
       docs: [
-        extras: ["README.md"],
+        extras: ["README.md", "LICENSE"],
         main: "readme"
       ]
     ]
@@ -26,7 +26,7 @@ defmodule Xirsys.XTurn.SimpleAuth.MixProject do
 
   defp deps do
     [
-      {:xmedialib, git: "https://github.com/xirsys/xmedialib"},
+      {:xmedialib, git: "https://github.com/xirsys/xmedialib", tag: "v0.1.0"},
       {:maru, "~> 0.13"},
       {:jason, "~> 1.1"},
       {:plug_cowboy, "~> 2.0"}
@@ -37,6 +37,7 @@ defmodule Xirsys.XTurn.SimpleAuth.MixProject do
     %{
       maintainers: ["Jahred Love"],
       licenses: ["Apache 2.0"],
+      organization: ["Xirsys"],
       links: %{"Github" => "https://github.com/xirsys/xturn-simple-auth"}
     }
   end
