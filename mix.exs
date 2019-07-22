@@ -26,6 +26,7 @@ defmodule Xirsys.XTurn.SimpleAuth.MixProject do
 
   defp deps do
     [
+      {:ex_doc, ">= 0.0.0", only: :dev},
       {:xmedialib, "~> 0.1"},
       {:xturn_cache, "~> 0.1"},
       {:xturn_sockets, "~> 0.1"},
