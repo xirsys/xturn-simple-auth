@@ -73,12 +73,12 @@ defmodule Xirsys.XTurn.SimpleAuth.Client do
   def handle_call({:create_user, ns, peer_id}, _from, state) do
     username = UUID.utc_random()
     password = UUID.utc_random()
-    Store.append_item_to_store(state, {username, {password, ns, peer_id}})
+    Store.append(state, {username, {password, ns, peer_id}})
     {:reply, {:ok, username, password}, state}
   end
 
   def handle_call({:add_user, user, pass, ns, peer_id}, _from, state) do
-    Store.append_item_to_store(state, {user, {pass, ns, peer_id}})
+    Store.append(state, {user, {pass, ns, peer_id}})
     {:reply, {:ok, user, pass}, state}
   end
 
@@ -108,6 +108,6 @@ defmodule Xirsys.XTurn.SimpleAuth.Client do
   end
 
   def handle_call(:get_count, _from, state) do
-    {:reply, Store.get_item_count(state), state}
+    {:reply, Store.item_count(state), state}
   end
 end

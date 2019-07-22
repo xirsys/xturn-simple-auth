@@ -28,6 +28,7 @@ defmodule Xirsys.XTurn.SimpleAuth.MixProject do
     [
       {:xmedialib, "~> 0.1"},
       {:xturn_cache, "~> 0.1"},
+      {:xturn_sockets, "~> 0.1"},
       {:maru, "~> 0.13"},
       {:jason, "~> 1.1"},
       {:plug_cowboy, "~> 2.0"}

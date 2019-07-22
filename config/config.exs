@@ -8,3 +8,7 @@ config :xturn_simple_auth, Xirsys.XTurn.SimpleAuth.Server,
 
 config :xturn_simple_auth,
   maru_servers: [Xirsys.XTurn.SimpleAuth.Server]
+
+config :xturn,
+  authentication: %{required: false, username: "guest", credential: "guest"},
+  realm: "xturn.me"
