@@ -9,7 +9,7 @@ An authentication system with REST API to add users dynamically to the XTurn ser
 Add this plugin to the XTurn mix file.
 
 ```elixir
-{:xturn_simple_auth, git: "https://github.com/xirsys/xturn-simple-auth"}
+{:xturn_simple_auth, "~> 0.1.0"}
 ```
 Then, add the dep as an additional application in the apps list.
 

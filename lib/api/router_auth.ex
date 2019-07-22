@@ -24,6 +24,7 @@
 
 defmodule Xirsys.XTurn.SimpleAuth.API.Router.Auth do
   use Xirsys.XTurn.SimpleAuth.Server
+  alias Xirsys.XTurn.SimpleAuth.Client
 
   namespace :auth do
     desc("Adds a user to the user list")
@@ -40,7 +41,7 @@ defmodule Xirsys.XTurn.SimpleAuth.API.Router.Auth do
     post do
       if not Map.has_key?(params, :username) or not Map.has_key?(params, :password) do
         {:ok, u, p} =
-          Xirsys.XTurn.SimpleAuth.Client.create_user(
+          Client.create_user(
             Map.get(params, :namespace) || "",
             Map.get(params, :peer_id) || ""
           )
@@ -48,7 +49,7 @@ defmodule Xirsys.XTurn.SimpleAuth.API.Router.Auth do
         json(conn, %{status: :ok, username: u, password: p})
       else
         {:ok, u, p} =
-          Xirsys.XTurn.SimpleAuth.Client.add_user(
+          Client.add_user(
             Map.get(params, :username),
             Map.get(params, :password),
             Map.get(params, :namespace) || "",

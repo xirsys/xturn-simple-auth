@@ -26,6 +26,8 @@ defmodule Xirsys.XTurn.SimpleAuth.Client do
   @moduledoc """
   """
   use GenServer
+  alias Xirsys.XTurn.Cache.Store
+  alias Xirsys.XTurn.SimpleAuth.UUID
   require Logger
   @vsn "0"
 
@@ -65,25 +67,25 @@ defmodule Xirsys.XTurn.SimpleAuth.Client do
 
   def init([]) do
     Logger.info("Initialising auth store")
-    Xirsys.XTurn.Cache.Store.init(@auth_lifetime)
+    Store.init(@auth_lifetime)
   end
 
   def handle_call({:create_user, ns, peer_id}, _from, state) do
-    username = Xirsys.XTurn.SimpleAuth.UUID.utc_random()
-    password = Xirsys.XTurn.SimpleAuth.UUID.utc_random()
-    Xirsys.XTurn.Cache.Store.append_item_to_store(state, {username, {password, ns, peer_id}})
+    username = UUID.utc_random()
+    password = UUID.utc_random()
+    Store.append_item_to_store(state, {username, {password, ns, peer_id}})
     {:reply, {:ok, username, password}, state}
   end
 
   def handle_call({:add_user, user, pass, ns, peer_id}, _from, state) do
-    Xirsys.XTurn.Cache.Store.append_item_to_store(state, {user, {pass, ns, peer_id}})
+    Store.append_item_to_store(state, {user, {pass, ns, peer_id}})
     {:reply, {:ok, user, pass}, state}
   end
 
   def handle_call({:get_pass, "user"}, _from, state), do: {:reply, {:ok, "pass"}, state}
 
   def handle_call({:get_pass, username}, _from, state) do
-    case Xirsys.XTurn.Cache.Store.fetch(state, username) do
+    case Store.fetch(state, username) do
       {:ok, {pass, _, _}} ->
         {:reply, {:ok, pass}, state}
 
@@ -96,7 +98,7 @@ defmodule Xirsys.XTurn.SimpleAuth.Client do
     do: {:reply, {:ok, "pass", nil, nil}, state}
 
   def handle_call({:get_details, username}, _from, state) do
-    case Xirsys.XTurn.Cache.Store.fetch(state, username) do
+    case Store.fetch(state, username) do
       {:ok, {pass, ns, peer_id}} ->
         {:reply, {:ok, pass, ns, peer_id}, state}
 
@@ -106,6 +108,6 @@ defmodule Xirsys.XTurn.SimpleAuth.Client do
   end
 
   def handle_call(:get_count, _from, state) do
-    {:reply, Xirsys.XTurn.Cache.Store.get_item_count(state), state}
+    {:reply, Store.get_item_count(state), state}
   end
 end

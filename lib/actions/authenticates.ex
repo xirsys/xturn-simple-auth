@@ -61,7 +61,8 @@ defmodule Xirsys.XTurn.SimpleAuth.Actions.Authenticates do
     with {:ok, pw, ns, peer_id} <- AuthClient.get_details(username),
          key <- username <> ":" <> @realm <> ":" <> pw,
          _ <- Logger.info("KEY = #{inspect(key)}"),
-         {:ok, turn} <- Stun.decode(msg, key) do
+         hkey <- :crypto.hash(:md5, key),
+         {:ok, turn} <- Stun.decode(msg, hkey) do
       %Stun{turn | key: key, ns: ns, peer_id: peer_id}
     else
       e ->

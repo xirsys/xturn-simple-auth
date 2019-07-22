@@ -14,7 +14,7 @@ defmodule Xirsys.XTurn.SimpleAuth.MixProject do
       homepage_url: "https://xturn.me",
       package: package(),
       docs: [
-        extras: ["README.md", "LICENSE"],
+        extras: ["README.md", "LICENSE.md"],
         main: "readme"
       ]
     ]
@@ -26,7 +26,8 @@ defmodule Xirsys.XTurn.SimpleAuth.MixProject do
 
   defp deps do
     [
-      {:xmedialib, git: "https://github.com/xirsys/xmedialib", tag: "v0.1.0"},
+      {:xmedialib, "~> 0.1"},
+      {:xturn_cache, "~> 0.1"},
       {:maru, "~> 0.13"},
       {:jason, "~> 1.1"},
       {:plug_cowboy, "~> 2.0"}
@@ -35,6 +36,7 @@ defmodule Xirsys.XTurn.SimpleAuth.MixProject do
 
   defp package do
     %{
+      files: ["lib", "mix.exs", "README.md", "LICENSE.md"],
       maintainers: ["Jahred Love"],
       licenses: ["Apache 2.0"],
       organization: ["Xirsys"],

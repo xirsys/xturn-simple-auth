@@ -29,10 +29,12 @@ defmodule Xirsys.XTurn.SimpleAuth.Supervisor do
   def start(_type, _args) do
     import Supervisor.Spec
     Logger.info("starting auth client")
+
     children = [
       worker(Xirsys.XTurn.SimpleAuth.Server, []),
       worker(Xirsys.XTurn.SimpleAuth.Client, [])
     ]
+
     opts = [strategy: :one_for_one, name: Xirsys.XTurn.SimpleAuth]
     Supervisor.start_link(children, opts)
   end
